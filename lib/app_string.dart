@@ -25,4 +25,6 @@ class AppString
       'path' : "https://www.facebook.com/",
     },
   ];
+
+  static bool ok = false;
 }

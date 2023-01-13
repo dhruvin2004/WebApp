@@ -23,8 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
+  late InAppWebViewController inAppWebViewController;
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         ),
         bottomNavigationBar: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
           height: 40,
           width: w,
           decoration: BoxDecoration(
@@ -60,29 +59,51 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
+                onTap: ()  {
+                  setState(() async{
+
+                  });
+                },
                 child: const Icon(
                   Icons.arrow_back_ios_new_outlined,
                   color: Colors.blue,
                 ),
               ),
               GestureDetector(
+                onTap: () {
+                  setState(() async{
+                    if(await inAppWebViewController.canGoForward())
+                    {
+                    await inAppWebViewController.goForward();
+                    }
+                  });
+                },
                 child:
                     Icon(Icons.arrow_forward_ios_outlined, color: Colors.blue),
               ),
               GestureDetector(
+                onTap: () {
+                  setState(() {});
+                },
                 child: Icon(CupertinoIcons.share, color: Colors.blue),
               ),
               GestureDetector(
+                onTap: () {
+                  setState(() {});
+                },
                 child: Icon(CupertinoIcons.book, color: Colors.blue),
               ),
               GestureDetector(
+                onTap: () {
+                  setState(() {});
+                },
                 child:
                     Icon(CupertinoIcons.square_on_square, color: Colors.blue),
               ),
             ],
           ),
         ),
-        body: HomeScreen()
+        body: HomeScreen(),
       ),
     );
   }
