@@ -9,7 +9,7 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
+
       home: MyApp(),
     ),
   );
@@ -36,14 +36,59 @@ class _MyAppState extends State<MyApp> {
           builder: (BuildContext context) {
             return Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(left: 10),
               height: 50,
               width: w,
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   border:
-                      Border(top: BorderSide(width: 1, color: Colors.black26))),
-              child: CupertinoSearchTextField(),
+                  Border(top: BorderSide(width: 1, color: Colors.black26))),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: w - 120 + AppString.a,
+                    child: CupertinoSearchTextField(
+                      onTap: () {
+                        setState(() {
+                          AppString.show = !AppString.show;
+                          if (AppString.show == true) {
+                            AppString.a = 0;
+                          } else {
+                            AppString.a = 95;
+                          }
+                        });
+                      },
+                      onChanged: (val) {
+                        setState(() {
+                          AppString.Value =val;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  (AppString.show)
+                      ? MaterialButton(
+                    color: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        inAppWebViewController.loadUrl(
+                          urlRequest: URLRequest(
+                            url: Uri.parse(
+                                'https://www.google.com/search?q=${AppString.Value}'),),);
+                      });
+                    },
+                    child: Text(
+                      "Done",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                      : Container(),
+                ],
+              ),
             );
           },
         ),

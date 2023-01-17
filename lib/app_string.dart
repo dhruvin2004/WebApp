@@ -27,4 +27,8 @@ class AppString
   ];
 
   static bool ok = false;
+  static bool show = false;
+  static int a = 95;
+
+  static String Value = "";
 }

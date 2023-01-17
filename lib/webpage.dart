@@ -1,13 +1,14 @@
+import 'package:crome/app_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'homepage.dart';
 
-
 class WebPage extends StatefulWidget {
   String path;
-   WebPage({Key? key,required this.path}) : super(key: key);
+
+  WebPage({Key? key, required this.path}) : super(key: key);
 
   @override
   State<WebPage> createState() => _WebPageState();
@@ -24,7 +25,7 @@ class _WebPageState extends State<WebPage> {
       child: Scaffold(
         body: InAppWebView(
           initialUrlRequest: URLRequest(
-            url: Uri.parse('${widget.path}'),
+            url: Uri.parse(widget.path),
           ),
           onWebViewCreated: (InAppWebViewController val) {
             setState(() {
@@ -37,18 +38,63 @@ class _WebPageState extends State<WebPage> {
           builder: (BuildContext context) {
             return Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.only(left: 10),
               height: 50,
               width: w,
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   border:
-                  Border(top: BorderSide(width: 1, color: Colors.black26))),
-              child: CupertinoSearchTextField(),
+                      Border(top: BorderSide(width: 1, color: Colors.black26))),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: w - 120 + AppString.a,
+                    child: CupertinoSearchTextField(
+                      onTap: () {
+                        setState(() {
+                          AppString.show = !AppString.show;
+                          if (AppString.show == true) {
+                            AppString.a = 0;
+                          } else {
+                            AppString.a = 95;
+                          }
+                        });
+                      },
+                      onChanged: (val) {
+                        setState(() {
+                           AppString.Value =val;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  (AppString.show)
+                      ? MaterialButton(
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              inAppWebViewController.loadUrl(
+                                  urlRequest: URLRequest(
+                                      url: Uri.parse(
+                                          'https://www.google.com/search?q=${AppString.Value}'),),);
+                            });
+                          },
+                          child: Text(
+                            "Done",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
             );
           },
         ),
-        bottomNavigationBar:  Container(
+        bottomNavigationBar: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
           height: 40,
@@ -60,16 +106,13 @@ class _WebPageState extends State<WebPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: ()  {
-                  setState(() async{
-                    if(await inAppWebViewController.canGoBack())
-                    {
+                onTap: () {
+                  setState(() async {
+                    if (await inAppWebViewController.canGoBack()) {
                       await inAppWebViewController.goBack();
+                    } else {
+                      Navigator.pop(context);
                     }
-                    else
-                      {
-                        Navigator.pop(context);
-                      }
                   });
                 },
                 child: const Icon(
@@ -79,15 +122,14 @@ class _WebPageState extends State<WebPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() async{
-                    if(await inAppWebViewController.canGoForward())
-                    {
+                  setState(() async {
+                    if (await inAppWebViewController.canGoForward()) {
                       await inAppWebViewController.goForward();
                     }
                   });
                 },
                 child:
-                Icon(Icons.arrow_forward_ios_outlined, color: Colors.blue),
+                    Icon(Icons.arrow_forward_ios_outlined, color: Colors.blue),
               ),
               GestureDetector(
                 onTap: () {
@@ -106,13 +148,12 @@ class _WebPageState extends State<WebPage> {
                   setState(() {});
                 },
                 child:
-                Icon(CupertinoIcons.square_on_square, color: Colors.blue),
+                    Icon(CupertinoIcons.square_on_square, color: Colors.blue),
               ),
             ],
           ),
         ),
       ),
     );
-
   }
 }
