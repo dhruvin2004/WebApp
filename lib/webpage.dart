@@ -139,17 +139,32 @@ class _WebPageState extends State<WebPage> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) => Container(
+                        height: 300,
+                        width: w,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xffe0e0e0),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        child: ListView(
+                          children: [
+                            Text("BookMark",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
                 },
                 child: Icon(CupertinoIcons.book, color: Colors.blue),
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {});
-                },
-                child:
-                    Icon(CupertinoIcons.square_on_square, color: Colors.blue),
-              ),
+
             ],
           ),
         ),

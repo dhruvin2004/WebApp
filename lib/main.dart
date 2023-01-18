@@ -9,7 +9,6 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-
       home: MyApp(),
     ),
   );
@@ -24,6 +23,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late InAppWebViewController inAppWebViewController;
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
               decoration: BoxDecoration(
                   color: Colors.grey.shade300,
                   border:
-                  Border(top: BorderSide(width: 1, color: Colors.black26))),
+                      Border(top: BorderSide(width: 1, color: Colors.black26))),
               child: Row(
                 children: [
                   SizedBox(
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                       },
                       onChanged: (val) {
                         setState(() {
-                          AppString.Value =val;
+                          AppString.Value = val;
                         });
                       },
                     ),
@@ -70,22 +70,24 @@ class _MyAppState extends State<MyApp> {
                   ),
                   (AppString.show)
                       ? MaterialButton(
-                    color: Colors.blue,
-                    onPressed: () {
-                      setState(() {
-                        inAppWebViewController.loadUrl(
-                          urlRequest: URLRequest(
-                            url: Uri.parse(
-                                'https://www.google.com/search?q=${AppString.Value}'),),);
-                      });
-                    },
-                    child: Text(
-                      "Done",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
+                          color: Colors.blue,
+                          onPressed: () {
+                            setState(() {
+                              inAppWebViewController.loadUrl(
+                                urlRequest: URLRequest(
+                                  url: Uri.parse(
+                                      'https://www.google.com/search?q=${AppString.Value}'),
+                                ),
+                              );
+                            });
+                          },
+                          child: Text(
+                            "Done",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
                       : Container(),
                 ],
               ),
@@ -104,10 +106,8 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: ()  {
-                  setState(() async{
-
-                  });
+                onTap: () {
+                  setState(() async {});
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_new_outlined,
@@ -116,10 +116,9 @@ class _MyAppState extends State<MyApp> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() async{
-                    if(await inAppWebViewController.canGoForward())
-                    {
-                    await inAppWebViewController.goForward();
+                  setState(() async {
+                    if (await inAppWebViewController.canGoForward()) {
+                      await inAppWebViewController.goForward();
                     }
                   });
                 },
@@ -134,16 +133,31 @@ class _MyAppState extends State<MyApp> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) => Container(
+                        height: 300,
+                        width: w,
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Color(0xffe0e0e0),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        child: ListView(
+                          children: [
+                            Text("BookMark",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),),
+
+                          ],
+                        ),
+                      ),
+                    );
+                  });
                 },
                 child: Icon(CupertinoIcons.book, color: Colors.blue),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {});
-                },
-                child:
-                    Icon(CupertinoIcons.square_on_square, color: Colors.blue),
               ),
             ],
           ),
