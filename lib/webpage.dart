@@ -133,6 +133,19 @@ class _WebPageState extends State<WebPage> {
               ),
               GestureDetector(
                 onTap: () {
+                  setState(() {
+                    inAppWebViewController.loadUrl(
+                      urlRequest: URLRequest(
+                        url: Uri.parse(
+                            'https://www.google.com'),
+                      ),
+                    );
+                  });
+                },
+                child: Icon(CupertinoIcons.add, color: Colors.blue),
+              ),
+              GestureDetector(
+                onTap: () {
                   setState(() {});
                 },
                 child: Icon(CupertinoIcons.share, color: Colors.blue),

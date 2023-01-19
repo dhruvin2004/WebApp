@@ -1,6 +1,6 @@
 class AppString
 {
-  static List BookMark = [];
+  static List page = [];
   static List favourite = [
     {
       'name' : "Apple",
